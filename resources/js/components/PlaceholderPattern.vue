@@ -13,4 +13,7 @@ const patternId = computed(() => `pattern-${Math.random().toString(36).substring
         </defs>
         <rect stroke="none" :fill="`url(#${patternId})`" width="100%" height="100%"></rect>
     </svg>
+    <div class="p-4 bg-green-100 text-black dark:bg-green-700 dark:text-white">
+        <p>Componente TaskList carregado com sucesso!</p>
+    </div>
 </template>

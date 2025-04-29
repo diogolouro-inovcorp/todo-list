@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class TaskController extends Controller
 {
@@ -26,7 +27,16 @@ class TaskController extends Controller
             $query->where('due_date', $request->due_date);
         }
 
-        return response()->json($query->orderBy('due_date')->get());
+        //return response()->json($query->orderBy('due_date')->get());
+        $tasks = $query->orderBy('due_date')->get();
+
+        if ($request->wantsJson()) {
+            return response()->json($tasks);
+        }
+
+        return Inertia::render('Dashboard', [
+            'tasks' => $tasks
+        ]);
     }
 
 
