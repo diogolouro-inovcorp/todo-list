@@ -13,21 +13,32 @@ class TaskController extends Controller
         $query = Task::query();
 
         //Filtros pelo Estado, Prioridade ou Data
-        if($request->has('status')){
-            if ($request->status === 'pendente'){
-                $query->where('completed', false);
-            } elseif ($request->status === 'concluida') {
-                $query->where('completed', true);
+//        if($request->has('status')){
+//            if ($request->status === 'pendente'){
+//                $query->where('completed', false);
+//            } elseif ($request->status === 'concluida') {
+//                $query->where('completed', true);
+//            }
+//        }
+//        if ($request->has('priority')){
+//            $query->where('priority', $request->priority);
+//        }
+//        if ($request->has('due_date')){
+//            $query->where('due_date', $request->due_date);
+//        }
+
+
+        if ($request->has('sort_by')) {
+            if ($request->sort_by === 'priority') {
+                $query->orderByRaw("FIELD(priority, 'alta', 'media', 'baixa')");
+            } else {
+                $query->orderBy($request->sort_by);
             }
-        }
-        if ($request->has('priority')){
-            $query->where('priority', $request->priority);
-        }
-        if ($request->has('due_date')){
-            $query->where('due_date', $request->due_date);
+        } else {
+            $query->orderBy('due_date');
         }
 
-        //return response()->json($query->orderBy('due_date')->get());
+//        return response()->json($query->orderBy('due_date')->get());
         $tasks = $query->orderBy('due_date')->get();
 
         if ($request->wantsJson()) {
