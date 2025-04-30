@@ -108,12 +108,7 @@ const stopDrag = () => {
                 <option value="baixa">Baixa</option>
             </select>
 
-            <input
-                v-model="filters.due_date"
-                type="date"
-                class="border rounded p-2"
-                placeholder="Data de vencimento"
-            />
+            <input v-model="filters.due_date" type="date" class="border rounded p-2" placeholder="Data de vencimento" />
 
             <select v-model="sortBy" class="border rounded p-2">
                 <option value="due_date">Ordenar por data</option>
@@ -126,7 +121,7 @@ const stopDrag = () => {
         <div v-if="loading" class="text-gray-500 dark:text-gray-400">A carregar...</div>
 
         <ul v-else class="space-y-2">
-            <li v-for="task in tasks" :key="task.id" class="p-3 border rounded shadow-sm bg-white dark:bg-gray-800">
+            <li v-for="task in tasks" :key="task.id" class="p-3 border rounded shadow-sm bg-white dark:bg-gray-800 cursor-pointer" @click="$emit('select-task', task)">
                 <div class="flex justify-between items-center">
                     <div :class="{ 'line-through opacity-60': task.completed }">
                         <h3 class="font-medium text-lg">{{ task.title }}</h3>

@@ -5,6 +5,8 @@ import { Head } from '@inertiajs/vue3';
 import PlaceholderPattern from '../components/PlaceholderPattern.vue';
 import TaskList from '../components/TaskList.vue'
 import CreateTask from '@/components/CreateTask.vue';
+import TaskDetails from '@/components/TaskDetails.vue';
+import { ref } from 'vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -13,9 +15,22 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-defineProps({
-    tasks: Array
-})
+const selectedTask = ref(null);
+const showDetails = ref(false);
+
+const openDetails = (task) => {
+    selectedTask.value = task;
+    showDetails.value = true;
+};
+
+const closeDetails = () => {
+    showDetails.value = false;
+};
+
+const updateLocalTask = (updatedTask) => {
+    // Atualiza a lista local se estiveres a usar local state
+};
+
 </script>
 
 <template>
@@ -30,7 +45,8 @@ defineProps({
                     </div>
                 </div>
                 <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <TaskList />
+                    <TaskList @select-task="openDetails"/>
+                    <TaskDetails :task="selectedTask" :show="showDetails" @close="closeDetails" @updated="updateLocalTask" />
                 </div>
                 <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
                     <PlaceholderPattern />
