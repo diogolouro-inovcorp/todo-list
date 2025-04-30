@@ -67,8 +67,6 @@ const confirmDelete = async (id: number) => {
     }
 }
 
-onMounted(fetchTasks)
-
 const scrollContainer = ref<HTMLElement | null>(null);
 const isDragging = ref(false);
 const startY = ref(0);
@@ -90,6 +88,7 @@ const stopDrag = () => {
     isDragging.value = false;
 };
 
+onMounted(fetchTasks)
 </script>
 
 <template>
@@ -121,7 +120,7 @@ const stopDrag = () => {
         <div v-if="loading" class="text-gray-500 dark:text-gray-400">A carregar...</div>
 
         <ul v-else class="space-y-2">
-            <li v-for="task in tasks" :key="task.id" class="p-3 border rounded shadow-sm bg-white dark:bg-gray-800 cursor-pointer" @click="$emit('select-task', task)">
+            <li v-for="task in tasks" :key="task.id" class="p-3 border rounded shadow-sm bg-white dark:bg-gray-800 cursor-pointer" >
                 <div class="flex justify-between items-center">
                     <div :class="{ 'line-through opacity-60': task.completed }">
                         <h3 class="font-medium text-lg">{{ task.title }}</h3>
@@ -136,7 +135,7 @@ const stopDrag = () => {
                     <div class="flex gap-2">
                         <button v-if="!task.completed" @click="markAsCompleted(task.id)" class="text-sm text-green-600 hover:underline" title="Marcar como concluída">✔️</button>
                         <button v-else @click="markAsPending(task.id)" class="text-sm text-yellow-600 hover:underline" title="Marcar como pendente">↩️</button>
-                        <!-- <button @click="deleteTask(task.id)" class="text-sm text-red-600 hover:underline" title="Eliminar tarefa">🗑️</button> -->
+                        <button @click="$emit('edit-task', task)" class="text-sm text-red-600 hover:underline" title="Editar tarefa">✏️</button>
                         <button @click="confirmDelete(task.id)" class="text-sm text-red-600 hover:underline" title="Eliminar tarefa">🗑️</button>
 
                     </div>

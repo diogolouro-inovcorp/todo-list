@@ -10,22 +10,22 @@ const form = useForm({
     title: '',
     description: '',
     due_date: '',
-    priority: 'média',
+    priority: 'media',
 });
 
 const priorities = ['alta', 'media', 'baixa'];
 
 const submitTask = () => {
     form.post('/tasks', {
+        //apos sucesso, limpa os campos
         onSuccess: () => {
-            // Limpa o formulário após envio bem-sucedido
             title.value = '';
             description.value = '';
             due_date.value = '';
             priority.value = 'media';
         },
+        //erros
         onError: (errors) => {
-            // Lidar com erros se necessário
             console.log(errors);
         },
     });

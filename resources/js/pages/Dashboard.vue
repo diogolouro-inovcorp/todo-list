@@ -45,7 +45,7 @@ const updateLocalTask = (updatedTask) => {
                     </div>
                 </div>
                 <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <TaskList @select-task="openDetails"/>
+                    <TaskList @edit-task="openDetails"/>
                     <TaskDetails :task="selectedTask" :show="showDetails" @close="closeDetails" @updated="updateLocalTask" />
                 </div>
                 <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
