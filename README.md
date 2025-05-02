@@ -11,7 +11,7 @@ Aplicação de gestão de tarefas desenvolvida com **Laravel**, **Vue**, **Inert
 - **Frontend:** Vue + TypeScript
 - **Ligação Front/Back:** Inertia.js
 - **CSS:** Tailwind CSS
-- **Autenticação:** Starter Kit Breeze (com autenticação e verificação de email)
+- **Autenticação:** Starter Kit (com autenticação e verificação de email)
 - **Base de Dados:** MySQL
 
 ---
@@ -30,18 +30,21 @@ routes/
 
 resources/js/
   ├── Pages/
-  │   └── Dashboard.vue     # Página principal com layout
+  │   └── Dashboard.vue         # Página principal com layout
   ├── Components/
-  │   ├── CreateTask.vue    # Criar as tarefas
-  │   ├── TaskList.vue      # Listagem das tarefas
-  │   ├── TaskStatsChart.vue     # Grafico para visualizar as tarefas
-  │   └── TaskDetails.vue   # Detalhes das tarefas
+  │   ├── CreateTask.vue        # Criar as tarefas
+  │   ├── TaskList.vue          # Listagem das tarefas
+  │   ├── TaskStatsChart.vue    # Grafico para visualizar as tarefas
+  │   └── TaskDetails.vue       # Detalhes das tarefas
   └── layouts/
-      └── AppLayout.vue     # Layout principal
+      └── AppLayout.vue         # Layout principal
   
 tests/
   └── Feature/
-      └── TaskTest.php      # Teste para criar uma tarefa
+      ├── DeleteTask.php            # Teste de apagar a tarefa
+      ├── EditTask.php              # Teste de editar tarefa
+      ├── CompletedTaskTest.php     # Teste de completar tarefa
+      └── TaskTest.php              # Teste para criar uma tarefa
 ```
 
 ---

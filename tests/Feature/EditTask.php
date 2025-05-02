@@ -3,6 +3,8 @@
 use App\Models\Task;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+uses(RefreshDatabase::class);
+
 test('uma tarefa pode ser atualizada', function () {
     $task = Task::create([
         'title' => 'Tarefa original',
