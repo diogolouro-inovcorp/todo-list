@@ -41,7 +41,7 @@ const updateTask = async () => {
             </div>
             <div class="flex justify-end gap-2 mt-4">
                 <button @click="$emit('close')" class="px-4 py-2 bg-gray-400 text-white rounded">Cancelar</button>
-                <button @click="updateTask" class="px-4 py-2 bg-blue-600 text-white rounded">Guardar</button>
+                <button @click.prevent="updateTask" class="px-4 py-2 bg-blue-600 text-white rounded">Guardar</button>
             </div>
         </div>
     </div>

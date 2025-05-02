@@ -89,10 +89,16 @@ const stopDrag = () => {
 };
 
 onMounted(fetchTasks)
+const props = defineProps({
+    refreshKey: Number
+});
+
+watch(() => props.refreshKey, fetchTasks);
+
 </script>
 
 <template>
-    <div ref="scrollContainer" class="p-4 max-h-[500px] overflow-y-auto scrollbar-hide" @pointerdown="startDrag" @pointermove="onDrag" @pointerup="stopDrag" @pointerleave="stopDrag">
+    <div ref="scrollContainer" class="p-4 max-h-[600px] overflow-y-auto scrollbar-hide" @pointerdown="startDrag" @pointermove="onDrag" @pointerup="stopDrag" @pointerleave="stopDrag">
         <div class="flex flex-wrap gap-2 mb-2 text-xs">
             <select v-model="filters.status" class="border rounded p-2">
                 <option value="">Todos os estados</option>

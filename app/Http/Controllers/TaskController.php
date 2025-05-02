@@ -20,14 +20,16 @@ class TaskController extends Controller
 //                $query->where('completed', true);
 //            }
 //        }
+//
 //        if ($request->has('priority')){
 //            $query->where('priority', $request->priority);
 //        }
+//
 //        if ($request->has('due_date')){
 //            $query->where('due_date', $request->due_date);
 //        }
 
-
+        //Ordenação
         if ($request->has('sort_by')) {
             if ($request->sort_by === 'priority') {
                 $query->orderByRaw("FIELD(priority, 'alta', 'media', 'baixa')");
@@ -38,31 +40,55 @@ class TaskController extends Controller
             $query->orderBy('due_date');
         }
 
-//        return response()->json($query->orderBy('due_date')->get());
-        $tasks = $query->orderBy('due_date')->get();
+        //Obter resultados
+        $tasks = $query->get();
+
+        //Contador para o Dashboard
+        $totalTasks = $tasks->count();
+        $pendingTasks = $tasks->where('completed', false)->count();
+        $completedTasks = $tasks->where('completed', true)->count();
 
         if ($request->wantsJson()) {
             return response()->json($tasks);
         }
 
         return Inertia::render('Dashboard', [
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'taskStats' => [
+                'total' => $totalTasks,
+                'pending' => $pendingTasks,
+                'completed' => $completedTasks,
+            ],
         ]);
     }
 
 
+//    public function store(Request $request)
+//    {
+//        $validated = $request->validate([
+//           'title' => 'required|string|max:255',
+//           'description' => 'nullable|string',
+//           'priority' => 'in:alta,media,baixa',
+//           'due_date' => 'nullable|date',
+//        ]);
+//
+//        $task = Task::create($validated);
+//        return response()->json($task, 201);
+//    }
     public function store(Request $request)
     {
         $validated = $request->validate([
-           'title' => 'required|string|max:255',
-           'description' => 'nullable|string',
-           'priority' => 'in:alta,media,baixa',
-           'due_date' => 'nullable|date',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'priority' => 'in:alta,media,baixa',
+            'due_date' => 'nullable|date',
         ]);
 
-        $task = Task::create($validated);
-        return response()->json($task, 201);
+        Task::create($validated);
+
+        return redirect()->back()->with('success', 'Tarefa criada com sucesso!');
     }
+
 
 
     public function show(Task $task)
