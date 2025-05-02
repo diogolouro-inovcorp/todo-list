@@ -12,24 +12,25 @@ class TaskController extends Controller
     {
         $query = Task::query();
 
-        //Filtros pelo Estado, Prioridade ou Data
-//        if($request->has('status')){
-//            if ($request->status === 'pendente'){
-//                $query->where('completed', false);
-//            } elseif ($request->status === 'concluida') {
-//                $query->where('completed', true);
-//            }
-//        }
-//
-//        if ($request->has('priority')){
-//            $query->where('priority', $request->priority);
-//        }
-//
-//        if ($request->has('due_date')){
-//            $query->where('due_date', $request->due_date);
-//        }
+        //Filtros pelo Estado
+        if($request->has('status')){
+            if ($request->status === 'pendente'){
+                $query->where('completed', false);
+            } elseif ($request->status === 'concluida') {
+                $query->where('completed', true);
+            }
+        }
+        //Filtro por Prioridade
+        if ($request->filled('priority')) {
+            $query->where('priority', $request->priority);
+        }
+        //Filtro por Data
+        if ($request->filled('due_date')) {
+            $query->where('due_date', $request->due_date);
+        }
 
-        //Ordenação
+
+        //Ordenação por prioridade e data
         if ($request->has('sort_by')) {
             if ($request->sort_by === 'priority') {
                 $query->orderByRaw("FIELD(priority, 'alta', 'media', 'baixa')");

@@ -2,7 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
-import PlaceholderPattern from '../components/PlaceholderPattern.vue';
+
 import TaskList from '../components/TaskList.vue'
 import CreateTask from '@/components/CreateTask.vue';
 import TaskDetails from '@/components/TaskDetails.vue';
@@ -30,7 +30,6 @@ const closeDetails = () => {
 };
 
 const updateLocalTask = () => {
-    // Atualiza a lista local se estiveres a usar local state
     refreshKey.value++;
     showDetails.value = false;
 };
@@ -39,6 +38,8 @@ defineProps({
     tasks: Array,
     taskStats: Object
 })
+
+
 </script>
 
 <template>
@@ -49,7 +50,7 @@ defineProps({
             <div class="grid auto-rows-min gap-4 md:grid-cols-3">
                 <!-- <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"> -->
                 <div class="relative min-h-[300px] sm:h-auto overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <CreateTask />
+                    <CreateTask @created="updateLocalTask"/>
                 </div>
                 <div class="relative min-h-[300px] sm:h-auto overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
                     <TaskList @edit-task="openDetails" :refresh-key="refreshKey"/>

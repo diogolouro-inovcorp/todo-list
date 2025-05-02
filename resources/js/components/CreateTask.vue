@@ -2,16 +2,13 @@
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 
-const title = ref('');
-const description = ref('');
-const due_date = ref('');
-const priority = ref('media');
 const form = useForm({
     title: '',
     description: '',
     due_date: '',
     priority: 'media',
 });
+const emit = defineEmits(['created']);
 
 const priorities = ['alta', 'media', 'baixa'];
 
@@ -19,10 +16,9 @@ const submitTask = () => {
     form.post('/tasks', {
         //apos sucesso, limpa os campos
         onSuccess: () => {
-            title.value = '';
-            description.value = '';
-            due_date.value = '';
-            priority.value = 'media';
+            form.reset();
+            //notifica o dashboard
+            emit('created');
         },
         //erros
         onError: (errors) => {
@@ -30,6 +26,8 @@ const submitTask = () => {
         },
     });
 };
+
+
 </script>
 
 <template>
@@ -84,6 +82,7 @@ const submitTask = () => {
                 >
                     Criar Tarefa
                 </button>
+                <p v-if="form.recentlySuccessful" class="text-green-600 mt-2">Tarefa criada com sucesso!</p>
             </div>
         </form>
     </div>
