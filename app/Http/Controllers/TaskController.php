@@ -64,18 +64,6 @@ class TaskController extends Controller
     }
 
 
-//    public function store(Request $request)
-//    {
-//        $validated = $request->validate([
-//           'title' => 'required|string|max:255',
-//           'description' => 'nullable|string',
-//           'priority' => 'in:alta,media,baixa',
-//           'due_date' => 'nullable|date',
-//        ]);
-//
-//        $task = Task::create($validated);
-//        return response()->json($task, 201);
-//    }
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -89,7 +77,6 @@ class TaskController extends Controller
 
         return redirect()->back()->with('success', 'Tarefa criada com sucesso!');
     }
-
 
 
     public function show(Task $task)
