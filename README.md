@@ -88,6 +88,12 @@ tests/
 
 ---
 
+## 🌍 Suporte Multilingue (i18n) na Aplicação Todo List
+- Laravel será responsável pelas traduções de mensagens de backend, validações e respostas da API.
+- Vue 3 usará a biblioteca vue-i18n para traduzir a interface do utilizador.
+
+---
+
 ## 🔧 Controladores
 
 **App\Http\Controllers\TaskController**
