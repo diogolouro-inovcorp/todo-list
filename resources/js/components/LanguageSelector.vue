@@ -13,6 +13,7 @@ const changeLocale = () => {
     <select v-model="currentLocale" @change="changeLocale" class="border rounded p-2">
         <option value="pt">Português</option>
         <option value="en">English</option>
+        <option value="es">Spanish</option>
     </select>
 </template>
 

@@ -3,6 +3,11 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { watch } from 'vue';
 
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
+
 const tasks = ref([])
 const loading = ref(true)
 const filters = ref({
@@ -101,29 +106,29 @@ watch(() => props.refreshKey, fetchTasks);
     <div ref="scrollContainer" class="p-4 max-h-[600px] overflow-y-auto scrollbar-hide" @pointerdown="startDrag" @pointermove="onDrag" @pointerup="stopDrag" @pointerleave="stopDrag">
         <div class="flex flex-wrap gap-2 mb-2 text-xs">
             <select v-model="filters.status" class="border rounded p-2">
-                <option value="">Todos os estados</option>
-                <option value="pendente">Pendentes</option>
-                <option value="concluida">Concluídas</option>
+                <option value="">{{ t('filters.all_statuses') }}</option>
+                <option value="pendente">{{ t('status.pending') }}</option>
+                <option value="concluida">{{ t('status.completed') }}</option>
             </select>
 
             <select v-model="filters.priority" class="border rounded p-2">
-                <option value="">Todas as prioridades</option>
-                <option value="alta">Alta</option>
-                <option value="media">Média</option>
-                <option value="baixa">Baixa</option>
+                <option value="">{{ t('filters.all_priorities') }}</option>
+                <option value="alta">{{ t('priority.high') }}</option>
+                <option value="media">{{ t('priority.medium') }}</option>
+                <option value="baixa">{{ t('priority.low') }}</option>
             </select>
 
             <input v-model="filters.due_date" type="date" class="border rounded p-2" placeholder="Data de vencimento" />
 
             <select v-model="sortBy" class="border rounded p-2">
-                <option value="due_date">Ordenar por data</option>
-                <option value="priority">Ordenar por prioridade</option>
+                <option value="due_date">{{ t('filters.sort_by_date') }}</option>
+                <option value="priority">{{ t('filters.sort_by_priority') }}</option>
             </select>
         </div>
 
-        <h2 class="text-xl font-semibold mb-4">Lista de Tarefas</h2>
+        <h2 class="text-xl font-semibold mb-4">{{ t('tasks.title') }}</h2>
 
-        <div v-if="loading" class="text-gray-500 dark:text-gray-400">A carregar...</div>
+        <div v-if="loading" class="text-gray-500 dark:text-gray-400">{{ t('tasks.loading') }}</div>
 
         <ul v-else class="space-y-2">
             <li v-for="task in tasks" :key="task.id" class="p-3 border rounded shadow-sm bg-white dark:bg-gray-800 cursor-pointer" >
@@ -131,18 +136,18 @@ watch(() => props.refreshKey, fetchTasks);
                     <div :class="{ 'line-through opacity-60': task.completed }">
                         <h3 class="font-medium text-lg">{{ task.title }}</h3>
                         <p class="text-sm text-gray-600 dark:text-gray-400">{{ task.description }}</p>
-                        <p class="text-xs text-gray-400 mt-1">Vencimento: {{ task.due_date }}</p>
+                        <p class="text-xs text-gray-400 mt-1">{{ t('tasks.due_date') }}: {{ task.due_date }}</p>
                     </div>
                     <div class="flex flex-col items-end gap-1">
                         <span :class="{'text-red-500': task.priority === 'alta', 'text-yellow-500': task.priority === 'media', 'text-green-500': task.priority === 'baixa'}" class="font-bold capitalize">
-                            {{ task.priority }}
+                            {{ t(`priority.${task.priority}`) }}
                         </span>
                     </div>
                     <div class="flex gap-2">
-                        <button v-if="!task.completed" @click="markAsCompleted(task.id)" class="text-sm text-green-600 hover:underline" title="Marcar como concluída">✔️</button>
-                        <button v-else @click="markAsPending(task.id)" class="text-sm text-yellow-600 hover:underline" title="Marcar como pendente">↩️</button>
-                        <button @click="$emit('edit-task', task)" class="text-sm text-red-600 hover:underline" title="Editar tarefa">✏️</button>
-                        <button @click="confirmDelete(task.id)" class="text-sm text-red-600 hover:underline" title="Eliminar tarefa">🗑️</button>
+                        <button v-if="!task.completed" @click="markAsCompleted(task.id)" class="text-sm text-green-600 hover:underline" title="t('buttons.mark_done')">✔️</button>
+                        <button v-else @click="markAsPending(task.id)" class="text-sm text-yellow-600 hover:underline" title="t('buttons.mark_pending')">↩️</button>
+                        <button @click="$emit('edit-task', task)" class="text-sm text-red-600 hover:underline" title="t('buttons.edit')">✏️</button>
+                        <button @click="confirmDelete(task.id)" class="text-sm text-red-600 hover:underline" title="t('buttons.delete')">🗑️</button>
 
                     </div>
                 </div>
