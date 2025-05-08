@@ -11,6 +11,7 @@ import { ref } from 'vue';
 import TaskStatsChart from '@/components/TaskStatsChart.vue';
 
 import LanguageSelector from '@/components/LanguageSelector.vue';
+import LanguageManager from '@/components/LanguageManager.vue';
 
 defineProps({
     tasks: Array,

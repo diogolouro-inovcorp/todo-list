@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 
 const { t } = useI18n();
 
@@ -68,7 +70,7 @@ const submitTask = () => {
             </div>
 
             <div class="mb-4">
-                <label for="priority" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ t('create_task.field_priority') }}</label>
+                <Label for="priority">{{ t('create_task.field_priority') }}</Label>
                 <select
                     v-model="form.priority"
                     id="priority"
@@ -79,12 +81,11 @@ const submitTask = () => {
             </div>
 
             <div class="mb-4">
-                <button
+                <Button
                     type="submit"
-                    class="w-full bg-blue-600 text-white py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                     {{ t('create_task.button') }}
-                </button>
+                </Button>
                 <p v-if="form.recentlySuccessful" class="text-green-600 mt-2">{{ t('create_task.success') }}</p>
             </div>
         </form>
