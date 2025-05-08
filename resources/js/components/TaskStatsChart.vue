@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, onMounted, onBeforeUnmount, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Chart, registerables } from 'chart.js'
-
 
 Chart.register(...registerables)
 
@@ -12,40 +12,36 @@ const props = defineProps({
     }
 })
 
+const { t } = useI18n()
+
 const chartCanvas = ref<HTMLCanvasElement | null>(null)
 let chartInstance: Chart | null = null
 
-function getChartData() {
+const chartData = computed(() => {
     const pending = props.stats?.pending ?? 0
     const completed = props.stats?.completed ?? 0
+
     return {
-        labels: ['Pendentes', 'Concluídas'],
+        labels: [t('chart.labels.pending'), t('chart.labels.completed')],
         datasets: [{
             data: [pending, completed],
             backgroundColor: ['#facc15', '#4ade80']
         }]
     }
-}
+})
+
 
 function renderChart() {
-    if (!chartCanvas.value) {
-        console.warn('Canvas ainda não está disponível')
-        return
-    }
+    if (!chartCanvas.value) return
 
-    if (chartInstance) {
-        chartInstance.destroy()
-    }
+    if (chartInstance) chartInstance.destroy()
 
     const ctx = chartCanvas.value.getContext('2d')
-    if (!ctx) {
-        console.error('Não foi possível obter contexto 2D do canvas')
-        return
-    }
+    if (!ctx) return
 
     chartInstance = new Chart(ctx, {
         type: 'pie',
-        data: getChartData(),
+        data: chartData.value,
         options: {
             responsive: true,
             plugins: {
@@ -71,11 +67,14 @@ onBeforeUnmount(() => {
         chartInstance.destroy()
     }
 })
+
+watch(() => props.stats, renderChart)
+watch(() => t('chart.labels.pending'), renderChart) //força update quando muda idioma
 </script>
 
 <template>
     <div class="p-4">
-        <h2 class="text-lg font-semibold mb-2">Estatísticas das Tarefas</h2>
+        <h2 class="text-lg font-semibold mb-2">{{ t('chart.title') }}</h2>
         <canvas ref="chartCanvas" class="w-full h-full"></canvas>
     </div>
 </template>

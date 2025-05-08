@@ -76,6 +76,7 @@ class TaskController extends Controller
         Task::create($validated);
 
         return redirect()->back()->with('success', 'Tarefa criada com sucesso!');
+//        return response()->json(['message' => __('messages.task_created')]);
     }
 
 
