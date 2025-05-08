@@ -1,5 +1,12 @@
 export default {
     welcome: 'Bem-vindo à sua Lista de Tarefas!',
+    language_selector:  {
+        select: 'Por favor, selecione o seu idioma:',
+        portuguese: 'Português',
+        english: 'Inglês',
+        spanish: 'Espanhol',
+        french: 'Francês',
+    },
     task_created: 'Tarefa criada com sucesso',
     task_edited: 'Tarefa editada',
     task_deleted: 'Tarefa eliminada.',

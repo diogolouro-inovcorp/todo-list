@@ -1,5 +1,12 @@
 export default {
     welcome: '¡Bienvenido a tu lista de tareas!',
+    language_selector:  {
+        select: 'Por favor, seleccione su idioma:',
+        portuguese: 'Portugués',
+        english: 'Inglés',
+        spanish: 'Español',
+        french: 'Francés',
+    },
     task_created: 'Tarea creada con éxito',
     task_edited: 'Tarea editada',
     task_deleted: 'Tarea eliminada.',

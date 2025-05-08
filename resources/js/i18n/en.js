@@ -1,5 +1,12 @@
 export default {
     welcome: 'Welcome to your Task List!',
+    language_selector:  {
+        select: 'Please select your language:',
+        portuguese: 'Portuguese',
+        english: 'English',
+        spanish: 'Spanish',
+        french: 'French',
+    },
     task_created: 'Task created successfully',
     task_edited: 'Task edited',
     task_deleted: 'Task deleted.',
