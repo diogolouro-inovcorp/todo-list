@@ -11,6 +11,12 @@ import { ref } from 'vue';
 import TaskStatsChart from '@/components/TaskStatsChart.vue';
 
 import LanguageSelector from '@/components/LanguageSelector.vue';
+
+defineProps({
+    tasks: Array,
+    taskStats: Object
+})
+
 const { t } = useI18n()
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -38,11 +44,6 @@ const updateLocalTask = () => {
     showDetails.value = false;
 };
 
-defineProps({
-    tasks: Array,
-    taskStats: Object
-})
-
 </script>
 
 <template>
@@ -50,7 +51,7 @@ defineProps({
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-            <p>{{ $t('welcome') }}</p>
+            <p>{{ t('welcome') }}</p>
             <div class="grid auto-rows-min gap-4 md:grid-cols-3">
                 <!-- <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"> -->
                 <div class="relative min-h-[300px] sm:h-auto overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
