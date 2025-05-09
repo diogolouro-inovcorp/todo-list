@@ -7,10 +7,16 @@ export default {
         spanish: 'Español',
         french: 'Francés',
     },
-    task_created: 'Tarea creada con éxito',
-    task_edited: 'Tarea editada',
-    task_deleted: 'Tarea eliminada.',
-    task_completed: 'Tarea marcada como completada.',
+    language_manager: {
+        title: 'Gestionar Idiomas',
+        selectExportLanguage: 'Exportar Idioma',
+        exportButton: 'Exportar',
+        selectImportLanguage: 'Importar Idioma',
+        importButton: 'Importar',
+        noFileSelected: 'Ningún archivo seleccionado',
+        importSuccess: 'Idioma importado con éxito',
+        importError: 'Error al importar el idioma'
+    },
 
     create_task: {
         title: 'Crear nueva tarea',
