@@ -25,6 +25,24 @@ declare module 'vite/client' {
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
+// Função para registar o Service Worker
+const registerServiceWorker = () => {
+    if ('serviceWorker' in navigator) {
+        registerSW({
+            onNeedRefresh() {
+                // Mostrar um aviso ao utilizador para atualizar a aplicação
+                if (confirm('Nova versão disponível. Atualizar agora?')) {
+                    window.location.reload();
+                }
+            },
+            onOfflineReady() {
+                // Mostrar um aviso de que a aplicação está pronta para funcionar offline
+                console.log('Aplicação pronta para funcionar offline');
+            },
+        });
+    }
+};
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./pages/${name}.vue`, import.meta.glob<DefineComponent>('./pages/**/*.vue')),
@@ -34,16 +52,15 @@ createInertiaApp({
         app.use(plugin)
         app.use(ZiggyVue)
         app.use(i18n)
-
+        registerServiceWorker();
         app.mount(el)
-        registerSW();
     },
-
     progress: {
         color: '#4B5563',
     },
 });
 
-
 // This will set light / dark mode on page load...
 initializeTheme();
+
+
