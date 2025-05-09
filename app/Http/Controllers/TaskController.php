@@ -72,6 +72,7 @@ class TaskController extends Controller
             'priority' => 'in:alta,media,baixa',
             'due_date' => 'nullable|date',
         ]);
+        $validated['user_id'] = auth()->id();
 
         Task::create($validated);
 

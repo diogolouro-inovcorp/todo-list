@@ -12,6 +12,7 @@ class Task extends Model
       'priority',
       'due_date',
       'completed',
+        'user_id',
     ];
 
 
@@ -19,4 +20,10 @@ class Task extends Model
         'completed' => 'boolean',
         'due_date' => 'date',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
