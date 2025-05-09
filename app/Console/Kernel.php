@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
     {
         //Agenda o envio diário dos emails
         $schedule->command('app:daily-task-mail')->dailyAt('08:00');
+//        $schedule->command('app:daily-task-mail')->everyMinute();
+
     }
 
     protected function commands(): void

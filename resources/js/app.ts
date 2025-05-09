@@ -8,6 +8,7 @@ import { ZiggyVue } from 'ziggy-js';
 import { initializeTheme } from './composables/useAppearance';
 
 import { i18n } from './i18n/i18n'
+import { registerSW } from 'virtual:pwa-register';
 
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
@@ -35,6 +36,7 @@ createInertiaApp({
         app.use(i18n)
 
         app.mount(el)
+        registerSW();
     },
 
     progress: {
