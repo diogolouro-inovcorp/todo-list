@@ -5,6 +5,9 @@ import tailwindcss from "@tailwindcss/vite";
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
+import { VitePWA } from 'vite-plugin-pwa';
+
+
 export default defineConfig({
     plugins: [
         laravel({
@@ -21,6 +24,39 @@ export default defineConfig({
                 },
             },
         }),
+
+        VitePWA({
+            registerType: 'autoUpdate',
+            includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
+            manifest: {
+                name: 'Todo List',
+                short_name: 'Todo',
+                description: 'Aplicação de gestão de tarefas',
+                theme_color: '#ffffff',
+                background_color: '#ffffff',
+                display: 'standalone',
+                start_url: '/',
+                icons: [
+                    {
+                        src: '/pwa-192x192.png',
+                        sizes: '192x192',
+                        type: 'image/png'
+                    },
+                    {
+                        src: '/pwa-512x512.png',
+                        sizes: '512x512',
+                        type: 'image/png'
+                    },
+                    {
+                        src: '/pwa-512x512.png',
+                        sizes: '512x512',
+                        type: 'image/png',
+                        purpose: 'any maskable'
+                    }
+                ]
+            }
+        }),
+
     ],
     resolve: {
         alias: {
