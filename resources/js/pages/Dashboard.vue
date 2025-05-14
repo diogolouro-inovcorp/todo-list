@@ -3,15 +3,15 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n'
+import { onMounted, ref } from 'vue';
 
 import TaskList from '../components/TaskList.vue'
 import CreateTask from '@/components/CreateTask.vue';
 import TaskDetails from '@/components/TaskDetails.vue';
-import { ref } from 'vue';
 import TaskStatsChart from '@/components/TaskStatsChart.vue';
-
 import LanguageSelector from '@/components/LanguageSelector.vue';
-import LanguageManager from '@/components/LanguageManager.vue';
+
+import axios from 'axios';
 
 defineProps({
     tasks: Array,
@@ -44,6 +44,26 @@ const updateLocalTask = () => {
     refreshKey.value++;
     showDetails.value = false;
 };
+
+onMounted(async () => {
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+        const permission = await Notification.requestPermission();
+
+        if (permission === 'granted') {
+            const registration = await navigator.serviceWorker.ready;
+
+            const subscription = await registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: import.meta.env.VITE_VAPID_PUBLIC_KEY,
+            });
+
+            await axios.post('/api/push/subscribe', subscription);
+            console.log('Subscrição enviada para o servidor.');
+        } else {
+            console.log('Permissão de notificações negada.');
+        }
+    }
+});
 
 </script>
 

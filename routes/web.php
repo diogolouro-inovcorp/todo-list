@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\TaskController;
+use App\Notifications\TestPushNotification;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -20,6 +23,44 @@ Route::get('/manifest.webmanifest', function () {
     return response()
         ->file(public_path('manifest.webmanifest'))
         ->header('Content-Type', 'application/manifest+json');
+});
+
+Route::get('/notificar', function () {
+    if (auth()->check()) {
+        Notification::send(auth()->user(), new TestPushNotification());
+        return 'Notificação enviada!';
+    }
+
+    return 'Precisas de fazer login!';
+});
+Route::post('/push/subscribe', function (Request $request) {
+    $request->user()->updatePushSubscription(
+        $request->input('endpoint'),
+        $request->input('keys.p256dh'),
+        $request->input('keys.auth')
+    );
+
+    return response()->json(['success' => true]);
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/settings/push-notifications/status', function () {
+        return response()->json([
+            'wantsPush' => auth()->user()->wants_push_notifications,
+        ]);
+    });
+
+    Route::post('/settings/push-notifications/toggle', function (Request $request) {
+        $request->validate([
+            'wantsPush' => 'required|boolean',
+        ]);
+
+        $user = auth()->user();
+        $user->wants_push_notifications = $request->wantsPush;
+        $user->save();
+
+        return response()->json(['success' => true]);
+    });
 });
 
 

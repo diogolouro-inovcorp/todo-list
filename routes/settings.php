@@ -18,7 +18,12 @@ Route::middleware('auth')->group(function () {
     Route::get('settings/appearance', function () {
         return Inertia::render('settings/Appearance');
     })->name('appearance');
+
     Route::get('settings/language', function () {
         return Inertia::render('settings/Language');
     })->name('language');
+
+    Route::get('settings/pushnotifications', function () {
+        return Inertia::render('settings/PushNotifications');
+    })->name('pushnotifications');
 });
