@@ -4,6 +4,7 @@ import axios from 'axios'
 import { watch } from 'vue';
 
 import { useI18n } from 'vue-i18n'
+import { getCurrentInstance } from 'vue';
 
 const { t } = useI18n()
 
@@ -16,6 +17,8 @@ const filters = ref({
     due_date: '',
 });
 const sortBy = ref('due_date');
+const app = getCurrentInstance();
+const toast = app?.appContext.config.globalProperties.$toast;
 
 onMounted(async () => {
     try {
@@ -47,8 +50,9 @@ const markAsCompleted = async (taskId: number) => {
     try {
         await axios.put(`/tasks/${taskId}`, { completed: true })
         await fetchTasks()
+        toast.success(t('toastNotifications.mark_done'));
     } catch (error) {
-        console.error('Erro ao marcar como concluída:', error)
+        console.error(t('consoleError.mark_done'), error)
     }
 }
 
@@ -56,8 +60,9 @@ const markAsPending = async (id: number) => {
     try {
         await axios.put(`/tasks/${id}`, { completed: false });
         fetchTasks();
+        toast.success(t('toastNotifications.mark_pending'));
     } catch (error) {
-        console.error('Erro ao marcar como pendente:', error);
+        console.error(t('consoleError.mark_pending'), error);
     }
 }
 
@@ -66,8 +71,9 @@ const confirmDelete = async (id: number) => {
         try {
             await axios.delete(`/tasks/${id}`);
             fetchTasks();
+            toast.success(t('toastNotifications.delete'));
         } catch (error) {
-            console.error('Erro ao eliminar a tarefa:', error);
+            console.error(t('consoleError.delete'), error);
         }
     }
 }
@@ -144,10 +150,10 @@ watch(() => props.refreshKey, fetchTasks);
                         </span>
                     </div>
                     <div class="flex gap-2">
-                        <button v-if="!task.completed" @click="markAsCompleted(task.id)" class="text-sm text-green-600 hover:underline" title="t('buttons.mark_done')">✔️</button>
-                        <button v-else @click="markAsPending(task.id)" class="text-sm text-yellow-600 hover:underline" title="t('buttons.mark_pending')">↩️</button>
-                        <button @click="$emit('edit-task', task)" class="text-sm text-red-600 hover:underline" title="t('buttons.edit')">✏️</button>
-                        <button @click="confirmDelete(task.id)" class="text-sm text-red-600 hover:underline" title="t('buttons.delete')">🗑️</button>
+                        <button v-if="!task.completed" @click="markAsCompleted(task.id)" class="text-sm text-green-600 hover:underline" :title="t('buttons.mark_done')">✔️</button>
+                        <button v-else @click="markAsPending(task.id)" class="text-sm text-yellow-600 hover:underline" :title="t('buttons.mark_pending')">↩️</button>
+                        <button @click="$emit('edit-task', task)" class="text-sm text-red-600 hover:underline" :title="t('buttons.edit')">✏️</button>
+                        <button @click="confirmDelete(task.id)" class="text-sm text-red-600 hover:underline" :title="t('buttons.delete')">🗑️</button>
 
                     </div>
                 </div>

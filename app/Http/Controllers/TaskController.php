@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Notifications\TaskCreatedNotification;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -74,7 +75,14 @@ class TaskController extends Controller
         ]);
         $validated['user_id'] = auth()->id();
 
-        Task::create($validated);
+        $task = Task::create($validated);
+
+        //notifica o user
+//        auth()->user()->notify(new TaskCreatedNotification($task));
+        if (auth()->user()->wants_push_notifications) {
+            auth()->user()->notify(new TaskCreatedNotification($task));
+        }
+
 
         return redirect()->back()->with('success', 'Tarefa criada com sucesso!');
 //        return response()->json(['message' => __('messages.task_created')]);

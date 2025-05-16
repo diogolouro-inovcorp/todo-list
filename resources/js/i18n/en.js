@@ -72,6 +72,20 @@ export default {
         delete: "Delete task",
     },
 
+    toastNotifications: {
+        mark_done: "Task marked as completed",
+        mark_pending: "Task marked as pending",
+        edit: "Task edited!",
+        delete: "Task deleted!"
+    },
+    consoleError: {
+        mark_done: "Error marking as completed:",
+        mark_pending: "Error marking as pending:",
+        edit: "Error editing task:",
+        delete: "Error deleting task:"
+    },
+
+
     taskDetails: {
         editTitle: "Edit Task",
         title: "Title",

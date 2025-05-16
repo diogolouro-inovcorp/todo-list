@@ -7,24 +7,24 @@ import { type BreadcrumbItem } from '@/types';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 
-import LanguageManager from '@/components/LanguageManager.vue';
+import TogglePushNotifications from '@/components/TogglePushNotifications.vue';
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
-        title: 'Language settings',
-        href: '/settings/language',
+        title: 'Push Notifications settings',
+        href: '/settings/pushnotifications',
     },
 ];
 </script>
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbItems">
-        <Head title="Language settings" />
+        <Head title="Push Notifications settings" />
 
         <SettingsLayout>
             <div class="space-y-6">
-                <HeadingSmall title="Language settings" description="Update your account's language settings" />
-                <LanguageManager />
+                <HeadingSmall title="Push Notifications settings" description="Update your account's push notification settings" />
+                <TogglePushNotifications />
             </div>
         </SettingsLayout>
     </AppLayout>

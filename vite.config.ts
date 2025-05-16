@@ -54,6 +54,12 @@ export default defineConfig({
                         purpose: 'any maskable'
                     }
                 ]
+            },
+            srcDir: 'resources/js',
+            filename: 'sw.ts',
+            devOptions: {
+                enabled: true,
+                type: 'module',
             }
         }),
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { getCurrentInstance, ref, watch } from 'vue';
 import axios from 'axios';
 import { useI18n } from 'vue-i18n';
 
@@ -12,6 +12,8 @@ const props = defineProps({
 const emit = defineEmits(['close', 'updated']);
 
 const editedTask = ref({ ...props.task });
+const app = getCurrentInstance();
+const toast = app?.appContext.config.globalProperties.$toast;
 
 watch(() => props.task, (newVal) => {
     editedTask.value = { ...newVal };
@@ -22,8 +24,9 @@ const updateTask = async () => {
         const response = await axios.put(`/tasks/${editedTask.value.id}`, editedTask.value);
         emit('updated', response.data);
         emit('close');
+        toast.success(t('toastNotifications.edit'));
     } catch (error) {
-        console.error(error);
+        console.error(t('consoleError.edit'), error);
     }
 };
 </script>

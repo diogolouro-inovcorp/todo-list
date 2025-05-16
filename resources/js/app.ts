@@ -10,6 +10,9 @@ import { initializeTheme } from './composables/useAppearance';
 import { i18n } from './i18n/i18n'
 import { registerSW } from 'virtual:pwa-register';
 
+import Toast from "vue-toast-notification";
+import "vue-toast-notification/dist/theme-default.css";
+
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
     interface ImportMetaEnv {
@@ -40,6 +43,13 @@ const registerServiceWorker = () => {
                 console.log('Aplicação pronta para funcionar offline');
             },
         });
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').then(reg => {
+                console.log('Service Worker registado com sucesso:', reg);
+            }).catch(err => {
+                console.error('Erro ao registar o Service Worker:', err);
+            });
+        });
     }
 };
 
@@ -52,6 +62,7 @@ createInertiaApp({
         app.use(plugin)
         app.use(ZiggyVue)
         app.use(i18n)
+        app.use(Toast);
         registerServiceWorker();
         app.mount(el)
     },

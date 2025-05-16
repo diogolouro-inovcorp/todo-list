@@ -22,6 +22,10 @@ const sidebarNavItems: NavItem[] = [
         title: 'Language',
         href: '/settings/language',
     },
+    {
+        title: 'Push Notifications',
+        href: '/settings/pushnotifications',
+    },
 ];
 
 const page = usePage();

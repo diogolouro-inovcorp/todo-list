@@ -71,6 +71,19 @@ export default {
         edit: "Editar tarea",
         delete: "Eliminar tarea",
     },
+    toastNotifications: {
+        mark_done: "Tarea marcada como completada",
+        mark_pending: "Tarea marcada como pendiente",
+        edit: "¡Tarea editada!",
+        delete: "¡Tarea eliminada!"
+    },
+    consoleError: {
+        mark_done: "Error al marcar como completada:",
+        mark_pending: "Error al marcar como pendiente:",
+        edit: "Error al editar la tarea:",
+        delete: "Error al eliminar la tarea:"
+    },
+
 
     taskDetails: {
         editTitle: "Editar tarea",
