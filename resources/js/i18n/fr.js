@@ -71,6 +71,19 @@ export default {
         edit: "Modifier la tâche",
         delete: "Supprimer la tâche",
     },
+    toastNotifications: {
+        mark_done: "Tâche marquée comme terminée",
+        mark_pending: "Tâche marquée comme en attente",
+        edit: "Tâche modifiée!",
+        delete: "Tâche supprimée!"
+    },
+    consoleError: {
+        mark_done: "Erreur lors du marquage comme terminé:",
+        mark_pending: "Erreur lors du marquage comme en attente:",
+        edit: "Erreur lors de la modification de la tâche:",
+        delete: "Erreur lors de la suppression de la tâche:"
+    },
+
 
     taskDetails: {
         editTitle: "Modifier la tâche",

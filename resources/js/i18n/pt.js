@@ -72,6 +72,18 @@ export default {
         edit: "Editar tarefa",
         delete: "Eliminar tarefa",
     },
+    toastNotifications: {
+        mark_done: "Tarefa marcada como concluída",
+        mark_pending: "Tarefa marcada como pendente",
+        edit: "Tarefa editada!",
+        delete: "Tarefa eliminada!",
+    },
+    consoleError: {
+        mark_done: "Erro ao marcar como concluída:",
+        mark_pending: "Erro ao marcar como pendente:",
+        edit: "Erro ao editar a terefa",
+        delete: "Erro ao eliminar a tarefa:",
+    },
     //TaskDetails
     taskDetails: {
         editTitle: "Editar Tarefa",

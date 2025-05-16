@@ -10,6 +10,9 @@ import { initializeTheme } from './composables/useAppearance';
 import { i18n } from './i18n/i18n'
 import { registerSW } from 'virtual:pwa-register';
 
+import Toast from "vue-toast-notification";
+import "vue-toast-notification/dist/theme-default.css";
+
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
     interface ImportMetaEnv {
@@ -59,6 +62,7 @@ createInertiaApp({
         app.use(plugin)
         app.use(ZiggyVue)
         app.use(i18n)
+        app.use(Toast);
         registerServiceWorker();
         app.mount(el)
     },
