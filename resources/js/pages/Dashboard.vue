@@ -13,6 +13,7 @@ import LanguageSelector from '@/components/LanguageSelector.vue';
 
 import axios from 'axios';
 
+
 defineProps({
     tasks: Array,
     taskStats: Object
@@ -39,10 +40,15 @@ const openDetails = (task) => {
 const closeDetails = () => {
     showDetails.value = false;
 };
-
+const notificationsBell = ref(null);
 const updateLocalTask = () => {
     refreshKey.value++;
     showDetails.value = false;
+
+    // Atualizar notificações
+    if (notificationsBell.value) {
+        notificationsBell.value.fetchNotifications();
+    }
 };
 
 onMounted(async () => {

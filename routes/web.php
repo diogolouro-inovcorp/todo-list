@@ -62,7 +62,20 @@ Route::middleware(['auth'])->group(function () {
         return response()->json(['success' => true]);
     });
 });
+Route::middleware('auth')->group(function () {
+    Route::get('/notifications', function () {
+        $user = auth()->user();
+        return response()->json([
+            'notifications' => $user->notifications->take(10),
+            'unread' => $user->unreadNotifications->count(),
+        ]);
+    });
 
+    Route::post('/notifications/mark-as-read', function () {
+        auth()->user()->unreadNotifications->markAsRead();
+        return response()->json(['success' => true]);
+    });
+});
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

@@ -2,23 +2,19 @@
 
 namespace App\Notifications;
 
-use App\Models\Task;
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\WebPush\WebPushChannel;
-use NotificationChannels\WebPush\WebPushMessage;
 
-class TaskCreatedNotification extends Notification
+class TaskExpiringSoon extends Notification implements ShouldQueue
 {
     use Queueable;
-    public Task $task;
+    public $task;
     /**
      * Create a new notification instance.
      */
-    public function __construct(Task $task)
+    public function __construct($task)
     {
         $this->task = $task;
     }
@@ -30,7 +26,7 @@ class TaskCreatedNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database', WebPushChannel::class];
+        return ['mail', 'database'];
     }
 
     /**
@@ -52,22 +48,9 @@ class TaskCreatedNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'title' => $this->task->title,
-            'description' => $this->task->description,
-            'priority' => ucfirst($this->task->priority),
-            'due_date' => Carbon::parse($this->task->due_date)->format('d/m/Y'),
+            'title' => 'Tarefa a expirar em breve',
+            'body' => "A tarefa '{$this->task->title}' termina amanhã.",
+            'task_id' => $this->task->id,
         ];
-    }
-
-    public function toWebPush($notifiable, $notification)
-    {
-        return (new WebPushMessage)
-            ->title('Nova tarefa criada')
-            ->body("{$this->task->title} (prioridade: {$this->task->priority})")
-            ->icon('/pwa-192x192.png')
-            ->action('Ver tarefa', "/tasks/{$this->task->id}")
-            ->data([
-                'url' => "/tasks/{$this->task->id}",
-            ]);
     }
 }

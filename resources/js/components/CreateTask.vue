@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { useI18n } from 'vue-i18n';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { router } from '@inertiajs/vue3';
 
 const { t } = useI18n();
 
@@ -24,6 +24,7 @@ const submitTask = () => {
             form.reset();
             //notifica o dashboard
             emit('created');
+            router.reload({ only: ['notifications'] });
         },
         //erros
         onError: (errors) => {
